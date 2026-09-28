@@ -13,7 +13,7 @@
 <body class="page-enter">
 <header class="site-header">
     <a class="logo" href="index.html">Dutam</a>
-    <nav class="nav-links" aria-label="Primary"><a href="about.html">About</a><a href="services.html">Products</a><a href="industries.html">Industries</a><a href="facility.html">Facility</a><a href="contact.html">Contact</a></nav>
+    <nav class="nav-links" aria-label="Primary"><a href="index.html" class="active">Home</a><a href="about.html">About</a><a href="services.html">Products</a><a href="industries.html">Industries</a><a href="facility.html">Facility</a><a href="contact.html">Contact</a></nav>
     <a class="btn header-cta" href="contact.html">Request a Quote</a>
     <button class="menu-btn" aria-label="Open menu" aria-expanded="false"><span></span></button>
   </header>
@@ -30,18 +30,26 @@
       </div>
     </section>
     <section class="section tight"><div class="wrap">
-      <div class="panel" style="background-image:url('images/parts.jpg')">
-        <div class="rail">PROJECT<ul><li>Requirement</li><li>Design</li><li>Manufacturing</li><li>Inspection</li><li>Delivery</li></ul></div>
-        <div>
-          <div class="kicker">Inspection</div>
-          <h2>Checked at every stage.</h2>
-          <p>Components and machines are inspected from machining through to the finished part, against your specification.</p>
-          <div class="mini-points">
-            <div><span>01</span><strong>Requirement</strong><p>The operation, the part, the objective.</p></div>
+      <div class="panel" data-project>
+        <div class="rail" role="tablist" aria-label="Project">
+          <p>Project</p>
+          <button type="button" role="tab" data-step="requirement">Requirement</button>
+          <button type="button" role="tab" data-step="design">Design</button>
+          <button type="button" role="tab" data-step="manufacturing">Manufacturing</button>
+          <button type="button" role="tab" class="active" data-step="inspection" aria-selected="true">Inspection</button>
+          <button type="button" role="tab" data-step="delivery">Delivery</button>
+        </div>
+        <div class="panel-main">
+          <p class="panel-kicker" data-project-kicker>Inspection</p>
+          <h2 data-project-title>Checked at every stage.</h2>
+          <p data-project-body>Components and machines are inspected from machining through to the finished part, against your specification.</p>
+          <div class="mini-points" data-project-points>
+            <div><span>01</span><strong>Requirement</strong><p>The operation, the objective.</p></div>
             <div><span>02</span><strong>Design</strong><p>The solution, in CAD.</p></div>
             <div><span>03</span><strong>Support</strong><p>Install, train, stay with it.</p></div>
           </div>
         </div>
+        <img class="panel-photo" data-project-photo src="images/parts.jpg" alt="Precision shafts, a gear, a flange, and a bush">
       </div>
     </div></section>
     <section class="section"><div class="wrap">

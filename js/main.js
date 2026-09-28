@@ -17,77 +17,119 @@ const chevron = `<svg class="chev" width="16" height="16" viewBox="0 0 16 16" ar
 
 document.querySelectorAll("[data-work]").forEach((root) => {
   const rows = [...root.querySelectorAll(".work-row")];
-  const preview = root.dataset.preview;
 
-  function activate(row) {
-    rows.forEach((item) => {
-      item.classList.remove("active");
-      const end = item.querySelector(".end");
-      end.innerHTML = chevron;
-    });
-    row.classList.add("active");
-    const end = row.querySelector(".end");
-    end.innerHTML = `<span class="thumb" style="background-image:url('${preview}')"></span><span class="bubble">${chevron}</span>`;
+  function clear(row) {
+    row.classList.remove("active");
+    row.querySelector(".end").innerHTML = chevron;
   }
 
-  const current = rows.find((row) => row.classList.contains("active")) || rows[0];
-  if (current) activate(current);
+  function activate(row) {
+    rows.forEach((item) => { if (item !== row) clear(item); });
+    const preview = row.dataset.preview || root.dataset.preview;
+    row.classList.add("active");
+    row.querySelector(".end").innerHTML = `<span class="thumb" style="background-image:url('${preview}')"></span><span class="bubble">${chevron}</span>`;
+  }
+
   rows.forEach((row) => {
+    clear(row);
     row.addEventListener("mouseenter", () => activate(row));
+    row.addEventListener("mouseleave", () => clear(row));
     row.addEventListener("focus", () => activate(row));
+    row.addEventListener("blur", () => clear(row));
   });
 });
 
-const stack = document.querySelector("[data-stack]");
-if (stack) {
-  const pins = [...stack.querySelectorAll(".stack-pin")];
-  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  const ease = "cubic-bezier(0.44, 0, 0.56, 1)";
+const project = document.querySelector("[data-project]");
+if (project) {
+  const steps = {
+    requirement: {
+      kicker: "Requirement",
+      title: "The operation, the part, the objective.",
+      body: "The production requirement, the specification, and the objective.",
+      image: "images/custom.jpg",
+      alt: "A prototype assembly and an engineering drawing on the bench",
+      points: [
+        ["01", "Operation", "The operation, the part, and what you need."],
+        ["02", "Specification", "Work built against your specification."],
+        ["03", "Objective", "The production requirement and the objective."]
+      ]
+    },
+    design: {
+      kicker: "Design",
+      title: "The solution, in CAD.",
+      body: "The solution, developed in CAD.",
+      image: "images/cadcam.jpg",
+      alt: "A CAD model of a flange beside the machined parts",
+      points: [
+        ["01", "Requirement", "The operation, the part, the objective."],
+        ["02", "CAD", "The solution, developed in CAD."],
+        ["03", "Accuracy", "Components and machines made to strict dimensional accuracy."]
+      ]
+    },
+    manufacturing: {
+      kicker: "Manufacturing",
+      title: "Machining and fabrication.",
+      body: "Machining and fabrication of the agreed design.",
+      image: "images/shop.jpg",
+      alt: "A CNC machining center on the shop floor",
+      points: [
+        ["01", "Design", "The agreed design."],
+        ["02", "Machining", "Machining and fabrication of the agreed design."],
+        ["03", "Consistency", "Each part and machine stays consistent with the specification."]
+      ]
+    },
+    inspection: {
+      kicker: "Inspection",
+      title: "Checked at every stage.",
+      body: "Components and machines are inspected from machining through to the finished part, against your specification.",
+      image: "images/parts.jpg",
+      alt: "Precision shafts, a gear, a flange, and a bush",
+      points: [
+        ["01", "Requirement", "The operation, the part, the objective."],
+        ["02", "Design", "The solution, in CAD."],
+        ["03", "Support", "Install, train, stay with it."]
+      ]
+    },
+    delivery: {
+      kicker: "Delivery",
+      title: "Install, train, stay with it.",
+      body: "Delivery, installation, training, and after-sales support.",
+      image: "images/spm.jpg",
+      alt: "A finished special-purpose machine on the shop floor",
+      points: [
+        ["01", "Delivery", "The finished machine or part, before delivery."],
+        ["02", "Installation", "Installation and training."],
+        ["03", "Support", "After-sales support."]
+      ]
+    }
+  };
+  const kicker = project.querySelector("[data-project-kicker]");
+  const title = project.querySelector("[data-project-title]");
+  const body = project.querySelector("[data-project-body]");
+  const points = project.querySelector("[data-project-points]");
+  const photo = project.querySelector("[data-project-photo]");
+  const tabs = [...project.querySelectorAll("[data-step]")];
 
-  function place(pin, index) {
-    pin.style.zIndex = String(index + 1);
-    if (!reduce && !pin.classList.contains("in")) return;
-    if (reduce) {
-      pin.style.opacity = "1";
-      pin.style.transform = "none";
-      return;
-    }
-    const next = pins[index + 1];
-    if (!next) {
-      pin.style.transform = "translateY(0px) scale(1)";
-      return;
-    }
-    const sticky = parseFloat(getComputedStyle(next).top) || 0;
-    const nextTop = next.getBoundingClientRect().top;
-    const startLine = window.innerHeight * 0.5;
-    const travel = Math.max(1, startLine - sticky);
-    const progress = Math.min(1, Math.max(0, (startLine - nextTop) / travel));
-    const scale = 1 - progress * 0.25;
-    const y = -30 * progress;
-    pin.style.transform = `translateY(${y}px) scale(${scale})`;
+  function show(step) {
+    const data = steps[step];
+    if (!data) return;
+    tabs.forEach((tab) => {
+      const on = tab.dataset.step === step;
+      tab.classList.toggle("active", on);
+      tab.setAttribute("aria-selected", String(on));
+    });
+    kicker.textContent = data.kicker;
+    title.textContent = data.title;
+    body.textContent = data.body;
+    photo.src = data.image;
+    photo.alt = data.alt;
+    points.innerHTML = data.points.map(([num, name, text]) => `<div><span>${num}</span><strong>${name}</strong><p>${text}</p></div>`).join("");
   }
 
-  pins.forEach((pin, index) => {
-    pin.style.zIndex = String(index + 1);
-    if (reduce) {
-      pin.classList.add("in");
-      place(pin, index);
-      return;
-    }
-    const reveal = new IntersectionObserver((entries) => {
-      if (!entries.some((entry) => entry.isIntersecting)) return;
-      pin.style.transition = `opacity 0.7s ${ease}, transform 0.7s ${ease}`;
-      pin.classList.add("in");
-      place(pin, index);
-      window.setTimeout(() => { pin.style.transition = "none"; }, 720);
-      reveal.disconnect();
-    }, { threshold: 0.5 });
-    reveal.observe(pin);
+  tabs.forEach((tab) => {
+    tab.addEventListener("mouseenter", () => show(tab.dataset.step));
+    tab.addEventListener("focus", () => show(tab.dataset.step));
   });
-
-  const onScroll = () => pins.forEach(place);
-  window.addEventListener("scroll", onScroll, { passive: true });
-  window.addEventListener("resize", onScroll);
 }
 
 const contactForm = document.querySelector("#quote-form");
