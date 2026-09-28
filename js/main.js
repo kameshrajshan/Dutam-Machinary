@@ -38,6 +38,58 @@ document.querySelectorAll("[data-work]").forEach((root) => {
   });
 });
 
+const stack = document.querySelector("[data-stack]");
+if (stack) {
+  const pins = [...stack.querySelectorAll(".stack-pin")];
+  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const ease = "cubic-bezier(0.44, 0, 0.56, 1)";
+
+  function place(pin, index) {
+    pin.style.zIndex = String(index + 1);
+    if (!reduce && !pin.classList.contains("in")) return;
+    if (reduce) {
+      pin.style.opacity = "1";
+      pin.style.transform = "none";
+      return;
+    }
+    const next = pins[index + 1];
+    if (!next) {
+      pin.style.transform = "translateY(0px) scale(1)";
+      return;
+    }
+    const sticky = parseFloat(getComputedStyle(next).top) || 0;
+    const nextTop = next.getBoundingClientRect().top;
+    const startLine = window.innerHeight * 0.5;
+    const travel = Math.max(1, startLine - sticky);
+    const progress = Math.min(1, Math.max(0, (startLine - nextTop) / travel));
+    const scale = 1 - progress * 0.25;
+    const y = -30 * progress;
+    pin.style.transform = `translateY(${y}px) scale(${scale})`;
+  }
+
+  pins.forEach((pin, index) => {
+    pin.style.zIndex = String(index + 1);
+    if (reduce) {
+      pin.classList.add("in");
+      place(pin, index);
+      return;
+    }
+    const reveal = new IntersectionObserver((entries) => {
+      if (!entries.some((entry) => entry.isIntersecting)) return;
+      pin.style.transition = `opacity 0.7s ${ease}, transform 0.7s ${ease}`;
+      pin.classList.add("in");
+      place(pin, index);
+      window.setTimeout(() => { pin.style.transition = "none"; }, 720);
+      reveal.disconnect();
+    }, { threshold: 0.5 });
+    reveal.observe(pin);
+  });
+
+  const onScroll = () => pins.forEach(place);
+  window.addEventListener("scroll", onScroll, { passive: true });
+  window.addEventListener("resize", onScroll);
+}
+
 const contactForm = document.querySelector("#quote-form");
 if (contactForm) {
   const note = new URLSearchParams(window.location.search).get("note");
