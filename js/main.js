@@ -25,9 +25,8 @@ document.querySelectorAll("[data-work]").forEach((root) => {
 
   function activate(row) {
     rows.forEach((item) => { if (item !== row) clear(item); });
-    const preview = row.dataset.preview || root.dataset.preview;
     row.classList.add("active");
-    row.querySelector(".end").innerHTML = `<span class="thumb" style="background-image:url('${preview}')"></span><span class="bubble">${chevron}</span>`;
+    row.querySelector(".end").innerHTML = `<span class="bubble">${chevron}</span>`;
   }
 
   rows.forEach((row) => {

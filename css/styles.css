@@ -418,14 +418,6 @@ a.card:hover, a.cap:hover, .quote:hover, .faq:hover {
   box-shadow: var(--shadow);
 }
 .work-row .end { display: flex; align-items: center; gap: 10px; }
-.thumb {
-  width: 92px;
-  height: 70px;
-  border-radius: 12px;
-  background: #ccc center / cover no-repeat;
-  transform: rotate(-7deg);
-  box-shadow: var(--shadow);
-}
 .bubble {
   width: 32px;
   height: 32px;
