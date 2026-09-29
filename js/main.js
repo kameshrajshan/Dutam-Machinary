@@ -43,7 +43,7 @@ if (project) {
   const steps = {
     requirement: {
       kicker: "Requirement",
-      title: "The operation, the part, the objective.",
+      title: "The operation, the objective.",
       body: "The production requirement, the specification, and the objective.",
       image: "images/custom.jpg",
       alt: "A prototype assembly and an engineering drawing on the bench",
@@ -60,7 +60,7 @@ if (project) {
       image: "images/cadcam.jpg",
       alt: "A CAD model of a flange beside the machined parts",
       points: [
-        ["01", "Requirement", "The operation, the part, the objective."],
+        ["01", "Requirement", "The operation, the objective."],
         ["02", "CAD", "The solution, developed in CAD."],
         ["03", "Accuracy", "Components and machines made to strict dimensional accuracy."]
       ]
@@ -84,7 +84,7 @@ if (project) {
       image: "images/parts.jpg",
       alt: "Precision shafts, a gear, a flange, and a bush",
       points: [
-        ["01", "Requirement", "The operation, the part, the objective."],
+        ["01", "Requirement", "The operation, the objective."],
         ["02", "Design", "The solution, in CAD."],
         ["03", "Support", "Install, train, stay with it."]
       ]
