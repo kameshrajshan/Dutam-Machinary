@@ -397,7 +397,10 @@ h1, h2, h3, p { margin: 0; }
   line-height: var(--text-body-lh);
   color: var(--ink);
 }
-.mini-points p { margin: 6px 0 0; }
+.mini-points p {
+  margin: 6px 0 0;
+  min-height: calc(2 * var(--text-body-sm-lh));
+}
 .panel-photo {
   width: 380px;
   height: 280px;

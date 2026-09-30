@@ -48,9 +48,9 @@ if (project) {
       image: "images/custom.jpg",
       alt: "A prototype assembly and an engineering drawing on the bench",
       points: [
-        ["01", "Operation", "The operation, the part, and what you need."],
-        ["02", "Specification", "Work built against your specification."],
-        ["03", "Objective", "The production requirement and the objective."]
+        ["01", "Operation", "The operation<br>and the part."],
+        ["02", "Specification", "Work built against<br>your specification."],
+        ["03", "Objective", "The production need<br>and the objective."]
       ]
     },
     design: {
@@ -60,9 +60,9 @@ if (project) {
       image: "images/cadcam.jpg",
       alt: "A CAD model of a flange beside the machined parts",
       points: [
-        ["01", "Requirement", "The operation, the objective."],
-        ["02", "CAD", "The solution, developed in CAD."],
-        ["03", "Accuracy", "Components and machines made to strict dimensional accuracy."]
+        ["01", "Requirement", "The operation,<br>the objective."],
+        ["02", "CAD", "The solution,<br>developed in CAD."],
+        ["03", "Accuracy", "Made to strict<br>dimensional accuracy."]
       ]
     },
     manufacturing: {
@@ -72,21 +72,21 @@ if (project) {
       image: "images/shop.jpg",
       alt: "A CNC machining center on the shop floor",
       points: [
-        ["01", "Design", "The agreed design."],
-        ["02", "Machining", "Machining and fabrication of the agreed design."],
-        ["03", "Consistency", "Each part and machine stays consistent with the specification."]
+        ["01", "Design", "Built from<br>the agreed design."],
+        ["02", "Machining", "Machining and<br>fabrication work."],
+        ["03", "Consistency", "Consistent with<br>the specification."]
       ]
     },
     inspection: {
       kicker: "Inspection",
       title: "Checked at every stage.",
-      body: "Components and machines are inspected from machining through to the finished part, against your specification.",
+      body: "Inspected from machining through to the finished part, against your specification.",
       image: "images/parts.jpg",
       alt: "Precision shafts, a gear, a flange, and a bush",
       points: [
-        ["01", "Requirement", "The operation, the objective."],
-        ["02", "Design", "The solution, in CAD."],
-        ["03", "Support", "Install, train, stay with it."]
+        ["01", "Requirement", "The operation,<br>the objective."],
+        ["02", "Design", "The solution,<br>in CAD."],
+        ["03", "Support", "Install, train,<br>stay with it."]
       ]
     },
     delivery: {
@@ -96,9 +96,9 @@ if (project) {
       image: "images/spm.jpg",
       alt: "A finished special-purpose machine on the shop floor",
       points: [
-        ["01", "Delivery", "The finished machine or part, before delivery."],
-        ["02", "Installation", "Installation and training."],
-        ["03", "Support", "After-sales support."]
+        ["01", "Delivery", "The finished machine<br>or part, delivered."],
+        ["02", "Installation", "Installation and<br>training on site."],
+        ["03", "Support", "After-sales support<br>after handover."]
       ]
     }
   };
