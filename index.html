@@ -12,12 +12,18 @@
   <script src="https://mcp.figma.com/mcp/html-to-design/capture.js" async></script>
 </head>
 <body class="page-enter">
+<div class="site-chrome">
+  <a class="announce-bar" href="contact.html">
+    <span class="announce-full">Precision machine parts and SPMs — from brief to floor. <strong>Request a Quote →</strong></span>
+    <span class="announce-short">Request a Quote →</span>
+  </a>
 <header class="site-header">
-    <a class="logo" href="index.html">Dutam</a>
-    <nav class="nav-links" aria-label="Primary"><a href="index.html" class="active">Home</a><a href="about.html">About</a><a href="services.html">Products</a><a href="industries.html">Industries</a><a href="contact.html">Contact</a></nav>
+    <a class="logo" href="index.html"><img src="images/Logo.png" alt="Dutam" width="168" height="36"></a>
+    <nav class="nav-links" aria-label="Primary"><a href="index.html" class="active">Home</a><a href="about.html">About</a><a href="services.html">Products</a><a href="industries.html">Industries</a><a href="contact.html">Contact</a><a class="btn header-cta-mobile" href="contact.html">Request a Quote</a></nav>
     <a class="btn header-cta" href="contact.html">Request a Quote</a>
     <button class="menu-btn" aria-label="Open menu" aria-expanded="false"><span></span></button>
   </header>
+</div>
 <main>
     <section class="hero-center" style="background-image:url('images/shop.jpg')">
       <div class="hero-copy">
@@ -31,26 +37,104 @@
       </div>
     </section>
     <section class="section tight"><div class="wrap">
-      <div class="panel" data-project>
-        <div class="rail" role="tablist" aria-label="Project">
-          <p>Project</p>
-          <button type="button" role="tab" data-step="requirement">Requirement</button>
-          <button type="button" role="tab" data-step="design">Design</button>
-          <button type="button" role="tab" data-step="manufacturing">Manufacturing</button>
-          <button type="button" role="tab" class="active" data-step="inspection" aria-selected="true">Inspection</button>
-          <button type="button" role="tab" data-step="delivery">Delivery</button>
+      <div class="project" data-project>
+        <div class="project-intro">
+          <div class="eyebrow">Project</div>
+          <h2>What happens at each stage.</h2>
+          <p>Expand a stage to see methods and gates — not a paraphrase of the overview.</p>
         </div>
-        <div class="panel-main">
-          <p class="panel-kicker" data-project-kicker>Inspection</p>
-          <h2 data-project-title>Checked at every stage.</h2>
-          <p data-project-body>Inspected from machining through to the finished part, against your specification.</p>
-          <div class="mini-points" data-project-points>
-            <div><span>01</span><strong>Requirement</strong><p>The operation,<br>the objective.</p></div>
-            <div><span>02</span><strong>Design</strong><p>The solution,<br>in CAD.</p></div>
-            <div><span>03</span><strong>Support</strong><p>Install, train,<br>stay with it.</p></div>
+        <div class="project-steps">
+          <div class="project-step is-open" data-step="requirement">
+            <button type="button" class="project-step-toggle" aria-expanded="true" aria-controls="project-panel-requirement" id="project-tab-requirement">
+              <span class="project-step-num">01</span>
+              <span class="project-step-label">Requirement</span>
+              <span class="project-step-icon" aria-hidden="true"></span>
+            </button>
+            <div class="project-step-collapse" id="project-panel-requirement" role="region" aria-labelledby="project-tab-requirement">
+              <div class="project-step-panel">
+                <h3>Lock the brief before CAD starts.</h3>
+                <p>We pin down the part, cycle time, tolerance band, and what “done” looks like on your line — so design is not guessing.</p>
+                <div class="mini-points">
+                  <div><span>01</span><strong>Part &amp; cycle</strong><p>What moves, how often, and where it fails today.</p></div>
+                  <div><span>02</span><strong>Limits</strong><p>Drawings, materials, and measurable acceptance.</p></div>
+                  <div><span>03</span><strong>Success</strong><p>The floor result you will sign off against.</p></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="project-step" data-step="design">
+            <button type="button" class="project-step-toggle" aria-expanded="false" aria-controls="project-panel-design" id="project-tab-design">
+              <span class="project-step-num">02</span>
+              <span class="project-step-label">Design</span>
+              <span class="project-step-icon" aria-hidden="true"></span>
+            </button>
+            <div class="project-step-collapse" id="project-panel-design" role="region" aria-labelledby="project-tab-design">
+              <div class="project-step-panel">
+                <h3>Review the machine before metal moves.</h3>
+                <p>CAD layouts, mechanisms, and envelopes you can mark up — fixtures, stations, and clearances fixed before the shop opens the job.</p>
+                <div class="mini-points">
+                  <div><span>01</span><strong>Layout</strong><p>Stations, reach, and how the part is held.</p></div>
+                  <div><span>02</span><strong>Mechanism</strong><p>Motion, actuation, and sequencing in CAD.</p></div>
+                  <div><span>03</span><strong>Sign-off</strong><p>Your review gate before any cut or weld.</p></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="project-step" data-step="manufacturing">
+            <button type="button" class="project-step-toggle" aria-expanded="false" aria-controls="project-panel-manufacturing" id="project-tab-manufacturing">
+              <span class="project-step-num">03</span>
+              <span class="project-step-label">Manufacturing</span>
+              <span class="project-step-icon" aria-hidden="true"></span>
+            </button>
+            <div class="project-step-collapse" id="project-panel-manufacturing" role="region" aria-labelledby="project-tab-manufacturing">
+              <div class="project-step-panel">
+                <h3>Cut, fabricate, and assemble in-house.</h3>
+                <p>CNC, fabrication, and build happen on our floor from the approved design — same team that drew it stays with the metal.</p>
+                <div class="mini-points">
+                  <div><span>01</span><strong>CNC &amp; fab</strong><p>Turning, milling, and fabrication on the job.</p></div>
+                  <div><span>02</span><strong>Build-up</strong><p>Assembly of the station or machine as designed.</p></div>
+                  <div><span>03</span><strong>Trace</strong><p>Work tied back to the approved CAD revision.</p></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="project-step" data-step="inspection">
+            <button type="button" class="project-step-toggle" aria-expanded="false" aria-controls="project-panel-inspection" id="project-tab-inspection">
+              <span class="project-step-num">04</span>
+              <span class="project-step-label">Inspection</span>
+              <span class="project-step-icon" aria-hidden="true"></span>
+            </button>
+            <div class="project-step-collapse" id="project-panel-inspection" role="region" aria-labelledby="project-tab-inspection">
+              <div class="project-step-panel">
+                <h3>Measured against the drawing, not guesswork.</h3>
+                <p>Dimensional checks on critical features as the job is built — and again on the finished part — before it leaves the shop.</p>
+                <div class="mini-points">
+                  <div><span>01</span><strong>In-process</strong><p>Checks while machining and build are underway.</p></div>
+                  <div><span>02</span><strong>Critical dims</strong><p>Features that decide fit, function, and cycle.</p></div>
+                  <div><span>03</span><strong>Release</strong><p>Final verify against your drawing before dispatch.</p></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="project-step" data-step="delivery">
+            <button type="button" class="project-step-toggle" aria-expanded="false" aria-controls="project-panel-delivery" id="project-tab-delivery">
+              <span class="project-step-num">05</span>
+              <span class="project-step-label">Delivery</span>
+              <span class="project-step-icon" aria-hidden="true"></span>
+            </button>
+            <div class="project-step-collapse" id="project-panel-delivery" role="region" aria-labelledby="project-tab-delivery">
+              <div class="project-step-panel">
+                <h3>On your floor until the station runs.</h3>
+                <p>We deliver, install, and run through the operation with your team — then stay reachable when the line needs us after handover.</p>
+                <div class="mini-points">
+                  <div><span>01</span><strong>Handover</strong><p>Machine or parts arrive ready for the line.</p></div>
+                  <div><span>02</span><strong>Commission</strong><p>Install, prove-out, and train operators on site.</p></div>
+                  <div><span>03</span><strong>Aftercare</strong><p>Support after the first production shifts.</p></div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
-        <img class="panel-photo" data-project-photo src="images/parts.jpg" alt="Precision shafts, a gear, a flange, and a bush">
       </div>
     </div></section>
     <section class="section industries-home">
@@ -149,7 +233,7 @@
       <div class="quotes"><blockquote class="quote"><p>Excellent quality machine parts and timely delivery. Their engineering team provided the perfect customized solution for our production line.</p><footer>Manufacturing Client</footer></blockquote><blockquote class="quote"><p>Professional service and highly reliable SPM solutions. We achieved significant productivity improvement after implementation.</p><footer>Automotive Industry Customer</footer></blockquote></div>
     </div></section>
     <section class="section close"><div class="wrap">
-    <div class="eyebrow">Request a quote</div>
+    <div class="eyebrow">Request a Quote</div>
     <h2 class="display">Start with the part<br>or the operation.</h2>
     <p>Share a drawing, a photo of the station, or a short note on what the line must do. Contact details are still to be confirmed.</p>
     <form class="ask" action="contact.html" method="get">
@@ -159,7 +243,7 @@
   </div></section>
   </main>
 <footer class="footer"><div class="wrap"><div class="rule"></div><div class="footer-row">
-    <div><strong>Dutam</strong><p class="tag">Engineering precision. Delivering performance.</p></div>
+    <div><a class="footer-logo" href="index.html"><img src="images/Logo.png" alt="Dutam" width="180" height="40"></a><p class="tag">Engineering precision. Delivering performance.</p></div>
     <div><div class="eyebrow">Pages</div><ul><li><a href="index.html">Home</a></li><li><a href="about.html">About</a></li><li><a href="services.html">Products</a></li><li><a href="industries.html">Industries</a></li><li><a href="contact.html">Contact</a></li><li><a href="privacy.html">Privacy</a></li></ul></div>
     <div><div class="eyebrow">Contact</div><ul><li>[Your Company Address]</li><li>[Your Contact Number]</li><li>[Your Email Address]</li></ul></div>
   </div></div></footer>

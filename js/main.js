@@ -1,16 +1,27 @@
-const header = document.querySelector(".site-header");
+const chrome = document.querySelector(".site-chrome");
 const menuButton = document.querySelector(".menu-btn");
 const nav = document.querySelector(".nav-links");
+const motionAllowed = !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
 window.addEventListener("scroll", () => {
-  header.classList.toggle("scrolled", window.scrollY > 8);
+  chrome?.classList.toggle("scrolled", window.scrollY > 8);
 }, { passive: true });
 
-menuButton.addEventListener("click", () => {
+menuButton?.addEventListener("click", () => {
   const open = nav.classList.toggle("open");
   menuButton.classList.toggle("open", open);
   menuButton.setAttribute("aria-expanded", String(open));
   menuButton.setAttribute("aria-label", open ? "Close menu" : "Open menu");
+});
+
+nav?.querySelectorAll("a").forEach((link) => {
+  link.addEventListener("click", () => {
+    if (!nav.classList.contains("open")) return;
+    nav.classList.remove("open");
+    menuButton.classList.remove("open");
+    menuButton.setAttribute("aria-expanded", "false");
+    menuButton.setAttribute("aria-label", "Open menu");
+  });
 });
 
 const chevron = `<svg class="chev" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M6 3.5 10.5 8 6 12.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path></svg>`;
@@ -40,94 +51,39 @@ document.querySelectorAll("[data-work]").forEach((root) => {
 
 const project = document.querySelector("[data-project]");
 if (project) {
-  const steps = {
-    requirement: {
-      kicker: "Requirement",
-      title: "The operation, the objective.",
-      body: "The production requirement, the specification, and the objective.",
-      image: "images/custom.jpg",
-      alt: "A prototype assembly and an engineering drawing on the bench",
-      points: [
-        ["01", "Operation", "The operation<br>and the part."],
-        ["02", "Specification", "Work built against<br>your specification."],
-        ["03", "Objective", "The production need<br>and the objective."]
-      ]
-    },
-    design: {
-      kicker: "Design",
-      title: "The solution, in CAD.",
-      body: "The solution, developed in CAD.",
-      image: "images/cadcam.jpg",
-      alt: "A CAD model of a flange beside the machined parts",
-      points: [
-        ["01", "Requirement", "The operation,<br>the objective."],
-        ["02", "CAD", "The solution,<br>developed in CAD."],
-        ["03", "Accuracy", "Made to strict<br>dimensional accuracy."]
-      ]
-    },
-    manufacturing: {
-      kicker: "Manufacturing",
-      title: "Machining and fabrication.",
-      body: "Machining and fabrication of the agreed design.",
-      image: "images/shop.jpg",
-      alt: "A CNC machining center on the shop floor",
-      points: [
-        ["01", "Design", "Built from<br>the agreed design."],
-        ["02", "Machining", "Machining and<br>fabrication work."],
-        ["03", "Consistency", "Consistent with<br>the specification."]
-      ]
-    },
-    inspection: {
-      kicker: "Inspection",
-      title: "Checked at every stage.",
-      body: "Inspected from machining through to the finished part, against your specification.",
-      image: "images/parts.jpg",
-      alt: "Precision shafts, a gear, a flange, and a bush",
-      points: [
-        ["01", "Requirement", "The operation,<br>the objective."],
-        ["02", "Design", "The solution,<br>in CAD."],
-        ["03", "Support", "Install, train,<br>stay with it."]
-      ]
-    },
-    delivery: {
-      kicker: "Delivery",
-      title: "Install, train, stay with it.",
-      body: "Delivery, installation, training, and after-sales support.",
-      image: "images/spm.jpg",
-      alt: "A finished special-purpose machine on the shop floor",
-      points: [
-        ["01", "Delivery", "The finished machine<br>or part, delivered."],
-        ["02", "Installation", "Installation and<br>training on site."],
-        ["03", "Support", "After-sales support<br>after handover."]
-      ]
-    }
-  };
-  const kicker = project.querySelector("[data-project-kicker]");
-  const title = project.querySelector("[data-project-title]");
-  const body = project.querySelector("[data-project-body]");
-  const points = project.querySelector("[data-project-points]");
-  const photo = project.querySelector("[data-project-photo]");
-  const tabs = [...project.querySelectorAll("[data-step]")];
+  const items = [...project.querySelectorAll(".project-step")];
 
-  function show(step) {
-    const data = steps[step];
-    if (!data) return;
-    tabs.forEach((tab) => {
-      const on = tab.dataset.step === step;
-      tab.classList.toggle("active", on);
-      tab.setAttribute("aria-selected", String(on));
-    });
-    kicker.textContent = data.kicker;
-    title.textContent = data.title;
-    body.textContent = data.body;
-    photo.src = data.image;
-    photo.alt = data.alt;
-    points.innerHTML = data.points.map(([num, name, text]) => `<div><span>${num}</span><strong>${name}</strong><p>${text}</p></div>`).join("");
+  function pulsePanel(panel) {
+    if (!motionAllowed) return;
+    const inner = panel.querySelector(".project-step-panel");
+    if (!inner) return;
+    inner.classList.remove("motion-panel-enter");
+    void inner.offsetWidth;
+    inner.classList.add("motion-panel-enter");
   }
 
-  tabs.forEach((tab) => {
-    tab.addEventListener("mouseenter", () => show(tab.dataset.step));
-    tab.addEventListener("focus", () => show(tab.dataset.step));
+  function setOpen(item, open, { animate = true } = {}) {
+    const toggle = item.querySelector(".project-step-toggle");
+    const panel = item.querySelector(".project-step-collapse");
+    item.classList.toggle("is-open", open);
+    toggle.setAttribute("aria-expanded", String(open));
+    panel.toggleAttribute("inert", !open);
+    panel.setAttribute("aria-hidden", String(!open));
+    if (open && animate) pulsePanel(panel);
+  }
+
+  function openStep(target) {
+    if (target.classList.contains("is-open")) return;
+    target.querySelector(".project-step-toggle").focus({ preventScroll: true });
+    items.forEach((item) => setOpen(item, item === target));
+  }
+
+  items.forEach((item) => {
+    setOpen(item, item.classList.contains("is-open"), { animate: false });
+    item.querySelector(".project-step-toggle").addEventListener("click", (event) => {
+      event.preventDefault();
+      openStep(item);
+    });
   });
 }
 
@@ -144,4 +100,79 @@ if (contactForm) {
     sessionStorage.setItem("dutam-enquiries", JSON.stringify(saved));
     contactForm.outerHTML = `<div class="form-card thanks"><h2>Thank you.</h2><p>We have the details of this enquiry. A delivery address is not connected yet, so it is kept in this browser only.</p></div>`;
   });
+}
+
+if (motionAllowed) {
+  document.documentElement.classList.add("motion-ready");
+
+  [
+    ".hero-center .hero-copy > *",
+    ".hero-statement .statement > *",
+    ".hero-navy h1",
+    ".hero-navy .note",
+    ".bento-hero-copy > *",
+  ].forEach((selector) => {
+    document.querySelectorAll(selector).forEach((el, index) => {
+      el.classList.add("motion-hero-item");
+      el.style.setProperty("--motion-delay", `${0.1 + index * 0.07}s`);
+    });
+  });
+
+  [
+    ".section-head",
+    ".project-intro",
+    ".industries-home-intro",
+    ".facility-copy",
+    ".detail .wrap > .eyebrow",
+    ".detail .wrap > h2",
+    ".detail-lead",
+    ".contact-band",
+    ".section.close .wrap > *",
+    ".prose > *",
+    ".process-photo",
+    ".facility-photo",
+    ".bento-section + .section .section-head",
+  ].forEach((selector) => {
+    document.querySelectorAll(selector).forEach((el) => el.classList.add("motion-reveal"));
+  });
+
+  const staggerRoots = [
+    ".cap-grid",
+    ".steps",
+    ".quotes",
+    ".industry-index",
+    ".equip-grid",
+    ".bento-section",
+    ".project-steps",
+  ];
+  staggerRoots.forEach((selector) => {
+    document.querySelectorAll(selector).forEach((root) => {
+      root.classList.add("motion-stagger");
+      [...root.children].forEach((child, index) => {
+        child.classList.add("motion-stagger-child");
+        child.style.setProperty("--motion-delay", `${Math.min(index * 0.05, 0.4)}s`);
+      });
+    });
+  });
+
+  document.querySelectorAll("[data-work]").forEach((root) => {
+    root.classList.add("motion-stagger");
+    [...root.querySelectorAll(".work-row")].forEach((row, index) => {
+      row.classList.add("motion-stagger-child");
+      row.style.setProperty("--motion-delay", `${Math.min(index * 0.04, 0.45)}s`);
+    });
+  });
+
+  const revealObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add("is-inview");
+        revealObserver.unobserve(entry.target);
+      });
+    },
+    { rootMargin: "0px 0px -10% 0px", threshold: 0.08 },
+  );
+
+  document.querySelectorAll(".motion-reveal, .motion-stagger").forEach((el) => revealObserver.observe(el));
 }
